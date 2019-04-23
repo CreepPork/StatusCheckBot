@@ -36,6 +36,7 @@
             "camel-case"
         ],
         "newline-before-return": true,
+        "no-console": false,
         "no-namespace": true,
         "no-null-keyword": true,
         "no-var-keyword": true,

@@ -6,28 +6,24 @@
   "repository": "https://github.com/CreepPork/StatusCheckBot",
   "scripts": {
     "listen": "smee --url https://smee.io/67w5gBahhzatR6QX --path / --port 3000",
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "lint": "tslint -c tslint.json 'src/**/.ts'"
+    "lint": "tslint -c tslint.json 'src/**/.ts'",
+    "start": "probot run ./dist/bot.js",
+    "build": "tsc -p tsconfig.json --skipLibCheck",
+    "watch": "npm run build -- --watch"
   },
   "author": "CreepPork_LV",
   "license": "MIT",
   "devDependencies": {
+    "@octokit/app": "^2.2.4",
     "@octokit/rest": "^16.25.0",
     "@types/dotenv": "^6.1.1",
     "@types/node": "^11.13.6",
-    "cross-env": "^5.2.0",
     "dotenv": "^7.0.0",
-    "laravel-mix": "^4.0.15",
-    "ts-loader": "^5.4.3",
     "tslint": "^5.16.0",
     "typescript": "^3.4.4"
   },
   "dependencies": {
+    "probot": "^9.2.7",
     "smee-client": "^1.1.0"
   }
 }
