@@ -31,7 +31,7 @@ module.exports = (app: probot.Application) => {
         if (foundLabel) {
             context.github.repos.createStatus({
                 context: 'Is Tested?',
-                description: 'This pull request has been testd in-game.',
+                description: 'This pull request has been tested in-game.',
                 owner: context.issue().owner,
                 repo: context.issue().repo,
                 sha: payload.pull_request.head.sha,
