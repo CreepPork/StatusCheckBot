@@ -14,8 +14,7 @@ if (! process.env.APP_ID ||
 }
 
 module.exports = (app: probot.Application) => {
-    // TODO: Doesn't fire on unlabeled
-    app.on('pull_request.labeled', async context => {
+    app.on(['pull_request.labeled', 'pull_request.unlabeled'], async context => {
         let foundLabel = false;
 
         const payload: IPullRequestEvent = context.payload;
@@ -30,11 +29,35 @@ module.exports = (app: probot.Application) => {
         }
 
         if (foundLabel) {
-            // Add CI Check
-            console.log('Found the label!');
+            context.github.repos.createStatus({
+                context: 'Is Tested?',
+                description: 'This pull request has been testd in-game.',
+                owner: context.issue().owner,
+                repo: context.issue().repo,
+                sha: payload.pull_request.head.sha,
+                state: 'success',
+            }).then(response => {
+                console.log(`Set pull request ${context.issue().number} status to success: ${response.status}
+                ${JSON.stringify(response.data)}`);
+            }).catch(error => {
+                console.error(`Failed to set pull request ${context.issue().number} status to success!
+                ${error}`);
+            });
         } else {
-            // Set CI check to fail
-            console.log(`Where's the label?!`);
+            context.github.repos.createStatus({
+                context: 'Is Tested?',
+                description: `This pull request hasn't been tested in-game.`,
+                owner: context.issue().owner,
+                repo: context.issue().repo,
+                sha: payload.pull_request.head.sha,
+                state: 'failure',
+            }).then(response => {
+                console.log(`Set pull request #${context.issue().number} status to failure: ${response.status}
+                ${JSON.stringify(response.data)}`);
+            }).catch(error => {
+                console.error(`Failed to set pull request #${context.issue().number} status to failure!
+                ${error}`);
+            });
         }
     });
 };

@@ -1,11 +1,10 @@
 {
   "name": "statuscheckbot",
   "version": "1.0.0",
-  "description": "A GitHub bot that checks if a pull request has a testing/tested label.",
+  "description": "A GitHub app which checks for a specific label on a pull request and sets the status of that pull request depending on if it's present or not.",
   "main": "dist/bot.js",
   "repository": "https://github.com/CreepPork/StatusCheckBot",
   "scripts": {
-    "listen": "smee --url https://smee.io/67w5gBahhzatR6QX --path / --port 3000",
     "lint": "tslint -c tslint.json 'src/**/.ts'",
     "start": "probot run ./dist/bot.js",
     "build": "tsc -p tsconfig.json --skipLibCheck",
@@ -14,8 +13,6 @@
   "author": "CreepPork_LV",
   "license": "MIT",
   "devDependencies": {
-    "@octokit/app": "^2.2.4",
-    "@octokit/rest": "^16.25.0",
     "@types/dotenv": "^6.1.1",
     "@types/node": "^11.13.6",
     "dotenv": "^7.0.0",
@@ -23,7 +20,6 @@
     "typescript": "^3.4.4"
   },
   "dependencies": {
-    "probot": "^9.2.7",
-    "smee-client": "^1.1.0"
+    "probot": "^9.2.7"
   }
 }
