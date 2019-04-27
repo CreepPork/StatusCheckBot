@@ -13,6 +13,10 @@ if (! process.env.APP_ID ||
         throw new Error(`Check your .env file as required data hasn't been filled.`);
 }
 
+const title = process.env.GITHUB_STATUS_TITLE || 'Is tested?';
+const bodySuccess = process.env.GITHUB_STATUS_BODY_SUCCESS || 'This pull request has been tested in-game.';
+const bodyFail = process.env.GITHUB_STATUS_BODY_FAILURE || `This pull request hasn't been tested in-game.`;
+
 module.exports = (app: probot.Application) => {
     app.on(['pull_request.labeled', 'pull_request.unlabeled'], async context => {
         let foundLabel = false;
@@ -30,8 +34,8 @@ module.exports = (app: probot.Application) => {
 
         if (foundLabel) {
             context.github.repos.createStatus({
-                context: 'Is Tested?',
-                description: 'This pull request has been tested in-game.',
+                context: title,
+                description: bodySuccess,
                 owner: context.issue().owner,
                 repo: context.issue().repo,
                 sha: payload.pull_request.head.sha,
@@ -44,8 +48,8 @@ module.exports = (app: probot.Application) => {
             });
         } else {
             context.github.repos.createStatus({
-                context: 'Is Tested?',
-                description: `This pull request hasn't been tested in-game.`,
+                context: title,
+                description: bodyFail,
                 owner: context.issue().owner,
                 repo: context.issue().repo,
                 sha: payload.pull_request.head.sha,
