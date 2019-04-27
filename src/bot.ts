@@ -41,9 +41,9 @@ module.exports = (app: probot.Application) => {
                 sha: payload.pull_request.head.sha,
                 state: 'success',
             }).then(response => {
-                console.log(`Set pull request ${context.issue().number} status to success: ${response.status}`);
+                console.log(`Set pull request #${context.issue().number} status to success: ${response.status}`);
             }).catch(error => {
-                console.error(`Failed to set pull request ${context.issue().number} status to success!
+                console.error(`Failed to set pull request #${context.issue().number} status to success!
                 ${error}`);
             });
         } else {
