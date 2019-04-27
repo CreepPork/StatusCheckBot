@@ -8,7 +8,7 @@ dotenv.config();
 if (! process.env.APP_ID ||
     ! process.env.WEBHOOK_SECRET ||
     ! process.env.WEBHOOK_PROXY_URL ||
-    (! process.env.PRIVATE_KEY_PATH || ! process.env.PRIVATE_KEY) ||
+    (! process.env.PRIVATE_KEY_PATH && ! process.env.PRIVATE_KEY) ||
     ! process.env.LABEL) {
         throw new Error(`Check your .env file as required data hasn't been filled.`);
 }
